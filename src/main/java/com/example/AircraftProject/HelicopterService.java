@@ -26,7 +26,7 @@ public class HelicopterService {
 
     public boolean updateHelicopter(int id, Helicopter updatedHelicopter) {
         Helicopter existingHelicopter = getHelicopterById(id);
-        if (existingHelicopter  != null) {
+        if (existingHelicopter != null) {
             existingHelicopter.setNumBlades(updatedHelicopter.getNumBlades());
             existingHelicopter.setNumEngines(updatedHelicopter.getNumEngines());
             existingHelicopter.setName(updatedHelicopter.getName());
@@ -39,10 +39,10 @@ public class HelicopterService {
     }
 
     public boolean deleteHelicopter(int id) {
-        Helicopter helicopterToRemove   getHelicopterById(id);
+        Helicopter helicopterToRemove = getHelicopterById(id);
         if (helicopterToRemove != null) {
             helicopters.remove(helicopterToRemove);
-            
+
             return true;
         } else {
             return false;
