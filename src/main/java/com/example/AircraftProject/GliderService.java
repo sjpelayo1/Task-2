@@ -13,9 +13,9 @@ public class GliderService {
         return gliders;
     }
 
-    public Glider getGliderById(String name) {
+    public Glider getGliderById(int id) {
         return gliders.stream()
-                .filter(glider -> glider.getName().equals(name))
+                .filter(glider -> glider.getID() == id)
                 .findFirst()
                 .orElse(null);
     }
@@ -24,15 +24,27 @@ public class GliderService {
         gliders.add(glider);
     }
 
-    public void updateGlider(String name, Glider updatedGlider) {
-        Glider existingGlider = getGliderById(name);
+    public boolean updateGlider(int id, Glider updatedGlider) {
+        Glider existingGlider = getGliderById(id);
         if (existingGlider != null) {
             existingGlider.setNumWings(updatedGlider.getNumWings());
             existingGlider.setName(updatedGlider.getName());
+
+            return true;
+        } else {
+            return false;
+
         }
     }
 
-    public void deleteGlider(String name) {
-        gliders.removeIf(glider -> glider.getName().equals(name));
+    public boolean deleteGlider(int id) {
+        Glider gliderToRemove = getGliderById(id);
+        if (gliderToRemove != null) {
+            gliders.remove(gliderToRemove);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

@@ -6,15 +6,16 @@ import java.util.List;
 
 @Service
 public class HelicopterService {
+
     private List<Helicopter> helicopters = new ArrayList<>();
 
     public List<Helicopter> getAllHelicopters() {
         return helicopters;
     }
 
-    public Helicopter getHelicopterById(String name) {
+    public Helicopter getHelicopterById(int id) {
         return helicopters.stream()
-                .filter(helicopter -> helicopter.getName().equals(name))
+                .filter(helicopter -> helicopter.getID() == id)
                 .findFirst()
                 .orElse(null);
     }
@@ -23,16 +24,29 @@ public class HelicopterService {
         helicopters.add(helicopter);
     }
 
-    public void updateHelicopter(String name, Helicopter updatedHelicopter) {
-        Helicopter existingHelicopter = getHelicopterById(name);
-        if (existingHelicopter != null) {
-            existingHelicopter.setNumEngines(updatedHelicopter.getNumEngines());
+    public boolean updateHelicopter(int id, Helicopter updatedHelicopter) {
+        Helicopter existingHelicopter = getHelicopterById(id);
+        if (existingHelicopter  != null) {
             existingHelicopter.setNumBlades(updatedHelicopter.getNumBlades());
+            existingHelicopter.setNumEngines(updatedHelicopter.getNumEngines());
             existingHelicopter.setName(updatedHelicopter.getName());
+
+            return true;
+        } else {
+            return false;
+
         }
     }
 
-    public void deleteHelicopter(String name) {
-        helicopters.removeIf(helicopter -> helicopter.getName().equals(name));
+    public boolean deleteHelicopter(int id) {
+        Helicopter helicopterToRemove   getHelicopterById(id);
+        if (helicopterToRemove != null) {
+            helicopters.remove(helicopterToRemove);
+            
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

@@ -4,11 +4,18 @@ public class Helicopter extends Aircraft {
 
     private int numEngines;
     private int numBlades;
+    private static int idCount = 1;
+    private int id;
 
-    public Helicopter(String name, int numEngines, int numBlades) {
+    public Helicopter(String name, int numEngines, int numBlades, int id) {
         super(name);
         this.numEngines = numEngines;
         this.numBlades = numBlades;
+        this.id = idCount++;
+    }
+
+    public int getID() {
+        return id;
     }
 
     public int getNumEngines() {
@@ -27,15 +34,11 @@ public class Helicopter extends Aircraft {
         this.numBlades = numBlades;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String toString() {
-        return "Helicopter Name: " + super.getName() +
-                ", Number of Engines: " + getNumEngines() +
-                ", Number of Blades: " + getNumBlades();
+        return "Helicopter Name: " + name +
+                ", Number of Engines: " + numEngines +
+                ", Number of Blades: " + numBlades;
     }
 
 }

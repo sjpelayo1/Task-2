@@ -6,15 +6,16 @@ import java.util.List;
 
 @Service
 public class JetService {
+
     private List<Jet> jets = new ArrayList<>();
 
     public List<Jet> getAllJets() {
         return jets;
     }
 
-    public Jet getJetById(String name) {
+    public Jet getJetById(int id) {
         return jets.stream()
-                .filter(jet -> jet.getName().equals(name))
+                .filter(jet -> jet.getID() == id)
                 .findFirst()
                 .orElse(null);
     }
@@ -23,16 +24,28 @@ public class JetService {
         jets.add(jet);
     }
 
-    public void updateJet(String name, Jet updatedJet) {
-        Jet existingJet = getJetById(name);
+    public boolean updateJet(int id, Jet updatedJet) {
+        Jet existingJet = getJetById(id);
         if (existingJet != null) {
-            existingJet.setNumEngines(updatedJet.getNumEngines());
             existingJet.setNumWings(updatedJet.getNumWings());
+            existingJet.setNumEngines(updatedJet.getNumEngines());
             existingJet.setName(updatedJet.getName());
+
+            return true;
+        } else {
+            return false;
+
         }
     }
 
-    public void deleteJet(String name) {
-        jets.removeIf(jet -> jet.getName().equals(name));
+    public boolean deleteJet(int id) {
+        Jet jetToRemove = getJetById(id);
+        if (jetToRemove != null) {
+            jets.remove(jetToRemove);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
