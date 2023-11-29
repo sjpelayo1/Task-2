@@ -1,18 +1,13 @@
 package com.example.AircraftProject;
 
 public class Glider extends Aircraft {
-    private static int idCount = 1;
-    private int id;
+
     private int numWings;
 
     public Glider(String name, int numWings, int id) {
-        super(name);
-        this.id = idCount++;
+        super(name, id);
         this.numWings = numWings;
-    }
 
-    public int getID() {
-        return id;
     }
 
     public int getNumWings() {
@@ -23,12 +18,8 @@ public class Glider extends Aircraft {
         this.numWings = numWings;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String toString() {
-        return "Glider Name: " + name + ", Number of Wings: " + numWings;
+        return "Glider Name: " + name + ", Number of Wings: " + numWings + "ID: " + id;
     }
 }

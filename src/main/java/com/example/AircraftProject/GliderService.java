@@ -8,6 +8,7 @@ import java.util.List;
 public class GliderService {
 
     private List<Glider> gliders = new ArrayList<>();
+    private int counter = 1;
 
     public List<Glider> getAllGliders() {
         return gliders;
@@ -15,13 +16,15 @@ public class GliderService {
 
     public Glider getGliderById(int id) {
         return gliders.stream()
-                .filter(glider -> glider.getID() == id)
+                .filter(glider -> glider.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
     public void addGlider(Glider glider) {
+        glider.setId(counter); // Set the ID for the glider
         gliders.add(glider);
+        counter++;
     }
 
     public boolean updateGlider(int id, Glider updatedGlider) {

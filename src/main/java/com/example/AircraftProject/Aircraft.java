@@ -1,10 +1,15 @@
 package com.example.AircraftProject;
 
-public abstract class Aircraft {
-    protected String name;
+import jakarta.validation.constraints.NotNull;
 
-    protected Aircraft(String name) {
+public abstract class Aircraft {
+    @NotNull
+    protected String name;
+    protected int id;
+
+    protected Aircraft(String name, int id) {
         this.name = name;
+        this.id = id;
     }
 
     public String getName() {
@@ -13,5 +18,13 @@ public abstract class Aircraft {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

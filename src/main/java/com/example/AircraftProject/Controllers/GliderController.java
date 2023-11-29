@@ -28,24 +28,23 @@ public class GliderController {
         if (glider != null) {
             return ResponseEntity.status(HttpStatus.OK).body(glider);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Glider not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
     @PostMapping
     public ResponseEntity<Object> addGlider(@Valid @RequestBody Glider glider) {
-        if (glider.getName() == null || glider.getName().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Glider name cannot be empty");
-        }
         gliderService.addGlider(glider);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Glider successfully created");
+        return ResponseEntity.status(HttpStatus.CREATED).body(glider);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateGlider(@PathVariable int id, @RequestBody Glider updatedGlider) {
-        boolean FoundUpdated = gliderService.updateGlider(id, updatedGlider);
-        if (FoundUpdated) {
-            return ResponseEntity.status(HttpStatus.OK).body("Glider updated successfully");
+    public ResponseEntity<Object> updateGlider(@PathVariable int id, @Valid @RequestBody Glider updatedGlider) {
+        boolean foundUpdated = gliderService.updateGlider(id, updatedGlider);
+        if (foundUpdated) {
+            Glider updatedIdGlider = gliderService.getGliderById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedIdGlider);
+
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Glider not found with ID: " + id);
         }
@@ -56,7 +55,8 @@ public class GliderController {
     public ResponseEntity<Object> deleteGlider(@PathVariable int id) {
         boolean FoundDeleted = gliderService.deleteGlider(id);
         if (FoundDeleted) {
-            return ResponseEntity.status(HttpStatus.OK).body("Glider deleted successfully");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Glider not found with ID: " + id);
         }
