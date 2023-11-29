@@ -22,7 +22,7 @@ public class GliderService {
     }
 
     public void addGlider(Glider glider) {
-        glider.setId(counter); // Set the ID for the glider
+        glider.setId(counter);
         gliders.add(glider);
         counter++;
     }
