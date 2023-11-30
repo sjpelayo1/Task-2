@@ -28,37 +28,35 @@ public class JetController {
         if (jet != null) {
             return ResponseEntity.status(HttpStatus.OK).body(jet);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Jet not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
     @PostMapping
     public ResponseEntity<Object> addJet(@Valid @RequestBody Jet jet) {
-        if (jet.getName() == null || jet.getName().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Jet name cannot be empty");
-        }
         jetService.addJet(jet);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Jet successfully created");
+        return ResponseEntity.status(HttpStatus.CREATED).body(jet);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateJet(@PathVariable int id, @RequestBody Jet updatedJet) {
-        boolean FoundUpdated = jetService.updateJet(id, updatedJet);
-        if (FoundUpdated) {
-            return ResponseEntity.status(HttpStatus.OK).body("Jet updated successfully");
+    public ResponseEntity<Object> updateJet(@PathVariable int id, @Valid @RequestBody Jet updatedJet) {
+        boolean foundUpdated = jetService.updateJet(id, updatedJet);
+        if (foundUpdated) {
+            Jet updatedIdJet = jetService.getJetById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedIdJet);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Jet not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteJet(@PathVariable int id) {
-        boolean FoundDeleted = jetService.deleteJet(id);
-        if (FoundDeleted) {
-            return ResponseEntity.status(HttpStatus.OK).body("Jet deleted successfully");
+        boolean foundDeleted = jetService.deleteJet(id);
+        if (foundDeleted) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Jet not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 }

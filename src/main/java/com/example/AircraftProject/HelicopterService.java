@@ -8,6 +8,7 @@ import java.util.List;
 public class HelicopterService {
 
     private List<Helicopter> helicopters = new ArrayList<>();
+    private int counter = 1;
 
     public List<Helicopter> getAllHelicopters() {
         return helicopters;
@@ -15,13 +16,15 @@ public class HelicopterService {
 
     public Helicopter getHelicopterById(int id) {
         return helicopters.stream()
-                .filter(helicopter -> helicopter.getID() == id)
+                .filter(helicopter -> helicopter.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
     public void addHelicopter(Helicopter helicopter) {
+        helicopter.setId(counter);
         helicopters.add(helicopter);
+        counter++;
     }
 
     public boolean updateHelicopter(int id, Helicopter updatedHelicopter) {
@@ -42,7 +45,6 @@ public class HelicopterService {
         Helicopter helicopterToRemove = getHelicopterById(id);
         if (helicopterToRemove != null) {
             helicopters.remove(helicopterToRemove);
-
             return true;
         } else {
             return false;

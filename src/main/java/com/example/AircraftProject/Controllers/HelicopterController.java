@@ -28,38 +28,37 @@ public class HelicopterController {
         if (helicopter != null) {
             return ResponseEntity.status(HttpStatus.OK).body(helicopter);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Helicopter not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
     @PostMapping
     public ResponseEntity<Object> addHelicopter(@Valid @RequestBody Helicopter helicopter) {
-        if (helicopter.getName() == null || helicopter.getName().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Helicopter name cannot be empty");
-        }
         helicopterService.addHelicopter(helicopter);
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("helicopter successfully created");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateHelicopter(@PathVariable int id, @RequestBody Helicopter updatedHelicopter) {
-        boolean FoundUpdated = helicopterService.updateHelicopter(id, updatedHelicopter);
-        if (FoundUpdated) {
-            return ResponseEntity.status(HttpStatus.OK).body("Helicopter updated successfully");
+    public ResponseEntity<Object> updateHelicopter(@PathVariable int id,
+            @Valid @RequestBody Helicopter updatedHelicopter) {
+        boolean foundUpdated = helicopterService.updateHelicopter(id, updatedHelicopter);
+        if (foundUpdated) {
+            Helicopter updatedIdHelicopter = helicopterService.getHelicopterById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedIdHelicopter);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Helicopter not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteHelicopter(@PathVariable int id) {
-        boolean FoundDeleted = helicopterService.deleteHelicopter(id);
-        if (FoundDeleted) {
-            return ResponseEntity.status(HttpStatus.OK).body("Helicopter deleted successfully");
+        boolean foundDeleted = helicopterService.deleteHelicopter(id);
+        if (foundDeleted) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Helicopter not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 }

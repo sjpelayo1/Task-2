@@ -46,19 +46,19 @@ public class GliderController {
             return ResponseEntity.status(HttpStatus.OK).body(updatedIdGlider);
 
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Glider not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteGlider(@PathVariable int id) {
-        boolean FoundDeleted = gliderService.deleteGlider(id);
-        if (FoundDeleted) {
+        boolean foundDeleted = gliderService.deleteGlider(id);
+        if (foundDeleted) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Glider not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 }

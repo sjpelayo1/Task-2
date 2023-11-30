@@ -8,6 +8,7 @@ import java.util.List;
 public class JetService {
 
     private List<Jet> jets = new ArrayList<>();
+    private int counter = 1;
 
     public List<Jet> getAllJets() {
         return jets;
@@ -15,13 +16,15 @@ public class JetService {
 
     public Jet getJetById(int id) {
         return jets.stream()
-                .filter(jet -> jet.getID() == id)
+                .filter(jet -> jet.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
     public void addJet(Jet jet) {
+        jet.setId(counter);
         jets.add(jet);
+        counter++;
     }
 
     public boolean updateJet(int id, Jet updatedJet) {
